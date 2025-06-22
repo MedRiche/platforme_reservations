@@ -1,4 +1,6 @@
 const Reservation = require('../models/Reservation');
+const { sendReservationMail, sendAnnulationMail } = require('../utils/mailer');
+const User = require('../models/User');
 const Espace = require('../models/Espace');
 
 exports.createReservation = async (req, res) => {
@@ -30,6 +32,18 @@ exports.createReservation = async (req, res) => {
     });
 
     await nouvelleReservation.save();
+
+    // Envoi d’e-mail de confirmation
+    const user = await User.findById(utilisateur);
+    const espaceInfo = await Espace.findById(espace);
+
+    await sendReservationMail(
+      user.email,
+      espaceInfo.nom,
+      dateDebut,
+      dateFin
+    );
+
     res.status(201).json(nouvelleReservation);
 
   } catch (err) {
@@ -59,7 +73,19 @@ exports.deleteReservation = async (req, res) => {
     reservation.statut = 'annulée';
     await reservation.save();
 
+    // Envoi d’e-mail d’annulation
+    const user = await User.findById(req.user.id);
+    const espaceInfo = await Espace.findById(reservation.espace);
+
+    await sendAnnulationMail(
+      user.email,
+      espaceInfo.nom,
+      reservation.dateDebut,
+      reservation.dateFin
+    );
+
     res.json({ message: 'Réservation annulée' });
+
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
