@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth.routes');
 const espaceRoutes = require('./routes/espace.routes');
+const reservationRoutes = require('./routes/reservation.routes');
 const cors = require('cors');
 require('dotenv').config();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/espaces', espaceRoutes);
+app.use('/api/reservations', reservationRoutes);
 
 // Routes
 app.get('/', (req, res) => {
