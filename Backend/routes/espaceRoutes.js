@@ -14,7 +14,7 @@ const isAdmin = require('../middlewares/isAdmin');
 router.post('/',  auth , isAdmin, createEspace);
 router.get('/',  getAllEspaces);
 router.get('/:id', getEspaceById);
-router.put('/:id', isAdmin, updateEspace);
-router.delete('/:id', isAdmin, deleteEspace);
+router.put('/:id', auth,isAdmin, updateEspace);
+router.delete('/:id',auth, isAdmin, deleteEspace);
 
 module.exports = router;

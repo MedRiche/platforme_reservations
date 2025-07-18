@@ -9,26 +9,44 @@ import { EspaceFormComponent } from './espace/espace-form/espace-form.component'
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { UsersComponent } from './admin/users/users.component';
 import { AuthGuard } from './guards/auth.guard';
+import { HeaderComponent } from './shared/header/header.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
+
 
 import { EspaceService } from './services/espace.service';
+import { UpdateEspaceComponent } from './admin/espaces_admin/update-espace/update-espace.component';
+import { ListAdminComponent } from './admin/espaces_admin/list-admin/list-admin.component';
+
 
 
 const routes: Routes = [
+    // Auth
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  
+  // Utilisateur normal
+  { path: 'espaces', component: EspaceListComponent },
   { path: 'reservation', component: ReservationFormComponent, canActivate: [AuthGuard] },
   { path: 'reservation', component: ReservationListComponent, canActivate: [AuthGuard] },
- { path: 'espaces', component: EspaceListComponent },
- { path: 'espaces/ajouter', component: EspaceFormComponent },
-  { path: 'espaces/modifier/:id', component: EspaceFormComponent },
+
+   // Admin
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   {path: 'admin/dashboard', component: DashboardComponent,},
- { path: 'admin/espaces', component: EspaceFormComponent }, // réservé aux admins
   { path: 'espaces', component: EspaceListComponent }, // réservé aux utilisateurs
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
 { path: 'admin/espaces/add', component: EspaceFormComponent },
-{ path: 'admin/espaces/edit/:id', component: EspaceFormComponent },
+{ path: 'admin/espaces/edit/:id', component: UpdateEspaceComponent },
 {path: 'admin/espaces', component: EspaceListComponent },
+{path : 'admin/update-espace/:id', component: UpdateEspaceComponent},
+{ path : 'admin/espace-form', component: EspaceFormComponent },
+{ path: 'admin/esp', component: ListAdminComponent},
+{path: 'admin/list-espaces', component: ListAdminComponent , canActivate: [AuthGuard]}
+
+
+
+
  
 ];
 

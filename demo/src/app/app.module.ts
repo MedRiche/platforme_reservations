@@ -22,6 +22,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EspaceService } from './services/espace.service';
+import { UpdateEspaceComponent } from './admin/espaces_admin/update-espace/update-espace.component';
+import { ListAdminComponent } from './admin/espaces_admin/list-admin/list-admin.component';
+
+
 
 @NgModule({
   declarations: [
@@ -32,6 +37,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     EspaceListComponent,
     ReservationFormComponent,
     ReservationListComponent,
+    DashboardComponent,
+    UsersComponent,
+    HeaderComponent,
+    SidebarComponent, 
+    UpdateEspaceComponent,
+    ListAdminComponent,
+
+
     
   ],
   imports: [
@@ -43,6 +56,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
      ReactiveFormsModule,
      BrowserAnimationsModule,
     MatSnackBarModule,
+    CommonModule,
 
     
   ],

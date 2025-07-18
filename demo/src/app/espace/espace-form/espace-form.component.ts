@@ -24,13 +24,15 @@ export class EspaceFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.espaceForm = this.fb.group({
-      nom: ['', Validators.required],
-      type: ['', Validators.required],
-      capacite: [0, [Validators.required, Validators.min(1)]],
-      localisation: ['', Validators.required],
-      disponibilite: [true]
-    });
+this.espaceForm = this.fb.group({
+  nom: ['', Validators.required],
+  type: ['', Validators.required],
+  capacite: [0, Validators.required],
+  localisation: ['', Validators.required],
+  disponibilite: [true],
+  prixParHeure: [0, Validators.required],
+  description: ['', Validators.required],
+});
 
     this.espaceId = this.route.snapshot.paramMap.get('id');
     if (this.espaceId) {
@@ -55,7 +57,7 @@ export class EspaceFormComponent implements OnInit {
             'Fermer',
             { duration: 3000 }
           );
-          this.router.navigate(['/admin/espaces']);
+          this.router.navigate(['admin/esp']);
         },
         error: err => {
           console.error('Erreur:', err);

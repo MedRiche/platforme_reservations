@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <h2>Liste des Espaces</h2>
+  <button class="btn btn-success mb-3" (click)="onAdd()">Ajouter un espace</button>
+
+  <ng-container *ngIf="espaces && espaces.length > 0; else noData">
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Nom</th>
+          <th>Type</th>
+          <th>Capacité</th>
+          <th>Localisation</th>
+          <th>Disponible</th>
+          <th>Prix/h</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let espace of espaces">
+          <td>{{ espace.nom }}</td>
+          <td>{{ espace.type }}</td>
+          <td>{{ espace.capacite }}</td>
+          <td>{{ espace.localisation }}</td>
+          <td>{{ espace.disponibilite ? 'Oui' : 'Non' }}</td>
+          <td>{{ espace.prixParHeure }} TND</td>
+          <td>{{ espace.description }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm me-2" (click)="onEdit(espace._id!)">Modifier</button>
+            <button class="btn btn-danger btn-sm" (click)="onDelete(espace._id!)">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+
+  <ng-template #noData>
+    <div class="alert alert-info text-center">Aucun espace trouvé.</div>
+  </ng-template>
+</div>

@@ -9,6 +9,8 @@ export interface Espace {
   capacite: number;
   localisation: string;
   disponibilite?: boolean;
+  description: string;
+  prixParHeure: number;
 }
 
 @Injectable({
@@ -23,9 +25,14 @@ export class EspaceService {
     return this.http.get<Espace[]>(this.apiUrl);
   }
 
-  getEspaceById(id: string): Observable<Espace> {
-    return this.http.get<Espace>(`${this.apiUrl}/${id}`);
-  }
+ 
+getEspaceById(id: string): Observable<Espace> {
+  return this.http.get<Espace>(`${this.apiUrl}/${id}`);
+}
+
+
+
+
 
   // ✅ méthode avec token pour admin
   createEspace(espace: Espace): Observable<Espace> {
@@ -36,27 +43,21 @@ export class EspaceService {
     return this.http.post<Espace>(this.apiUrl, espace, { headers });
   }
 
-  updateEspace(id: string, espace: Espace): Observable<Espace> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-    return this.http.put<Espace>(`${this.apiUrl}/${id}`, espace, { headers });
-  }
+updateEspace(id: string, data: any) {
+  return this.http.put(`${this.apiUrl}/${id}`, data);
+}
 
-  deleteEspace(id: string): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-    return this.http.delete(`${this.apiUrl}/${id}`, { headers });
-  }
+deleteEspace(id: string) {
+  return this.http.delete(`${this.apiUrl}/${id}`);
+}
   ajouterEspace(data: Espace): Observable<Espace> {
   return this.http.post<Espace>(this.apiUrl, data);
 }
 
  getAllEspaces(): Observable<Espace[]> {
-  return this.http.get<Espace[]>(this.apiUrl);
+  return this.http.get<Espace[]>(`${this.apiUrl}`);
 }
+
+
 
 }

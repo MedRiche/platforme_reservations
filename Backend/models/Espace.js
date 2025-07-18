@@ -7,7 +7,7 @@ const espaceSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['salle', 'bureau', 'coworking', 'Amphi','hotel'],
+    enum: ['salle', 'bureau', 'coworking', 'Amphi', 'hotel'],
     required: true
   },
   capacite: {
@@ -21,6 +21,14 @@ const espaceSchema = new mongoose.Schema({
   disponibilite: {
     type: Boolean,
     default: true
+  },
+  prixParHeure: {
+    type: Number,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
   }
 });
 

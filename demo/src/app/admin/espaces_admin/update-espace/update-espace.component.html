@@ -1,0 +1,51 @@
+<div class="container mt-5">
+  <h2 class="mb-4">Modifier un espace</h2>
+
+  <form [formGroup]="espaceForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="nom" class="form-label">Nom de l’espace</label>
+      <input type="text" id="nom" formControlName="nom" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea id="description" formControlName="description" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="capacite" class="form-label">Capacité</label>
+      <input type="number" id="capacite" formControlName="capacite" class="form-control" />
+    </div>
+
+    <div class="mb-3 form-check">
+      <input type="checkbox" id="disponibilite" formControlName="disponibilite" class="form-check-input" />
+      <label class="form-check-label" for="disponibilite">Disponible</label>
+    </div>
+
+    <div class="mb-3">
+      <label for="prixParHeure" class="form-label">Prix par heure</label>
+      <input type="number" id="prixParHeure" formControlName="prixParHeure" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="localisation" class="form-label">Localisation</label>
+      <input type="text" id="localisation" formControlName="localisation" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="type" class="form-label">Type</label>
+      <select id="type" formControlName="type" class="form-select">
+        <option value="">-- Choisir un type --</option>
+        <option value="Salle de réunion">salle</option>
+        <option value="Bureau partagé">Bureau</option>
+        <option value="Espace événementiel">hotel</option>
+        <option value="Espace de coworking">coworking</option>
+        <option value="Amphithéâtre">Amphi</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="espaceForm.invalid">
+      Enregistrer les modifications
+    </button>
+  </form>
+</div>
