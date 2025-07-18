@@ -1,0 +1,22 @@
+<h2>{{ isEdit ? 'Modifier' : 'Ajouter' }} un espace</h2>
+
+<form [formGroup]="espaceForm" (ngSubmit)="onSubmit()">
+  <label>Nom :</label>
+  <input formControlName="nom" type="text" />
+
+  <label>Type :</label>
+  <input formControlName="type" type="text" />
+
+  <label>Capacité :</label>
+  <input formControlName="capacite" type="number" />
+
+  <label>Localisation :</label>
+  <input formControlName="localisation" type="text" />
+
+  <label>Disponible :</label>
+  <input type="checkbox" formControlName="disponibilite" />
+
+  <button type="submit">
+    {{ isEdit ? 'Modifier' : 'Ajouter' }} l'espace
+  </button>
+</form>

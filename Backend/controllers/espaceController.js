@@ -2,6 +2,7 @@ const Espace = require('../models/Espace');
 
 exports.createEspace = async (req, res) => {
   try {
+     console.log('Espace reçu:', req.body); // 👈 ajout
     const espace = new Espace(req.body);
     await espace.save();
     res.status(201).json(espace);

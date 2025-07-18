@@ -7,7 +7,7 @@ const espaceSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['salle', 'bureau', 'coworking'],
+    enum: ['salle', 'bureau', 'coworking', 'Amphi','hotel'],
     required: true
   },
   capacite: {

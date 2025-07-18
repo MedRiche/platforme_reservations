@@ -1,11 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-users',
+  selector: 'app-admin-users',
   standalone: false,
   templateUrl: './users.component.html',
-  styleUrl: './users.component.css'
+  styleUrls: ['./users.component.scss']
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit {
+  users = [
+    { id: 1, email: 'user1@example.com', role: 'utilisateur' },
+    { id: 2, email: 'admin@example.com', role: 'admin' }
+  ];
 
+  constructor() {}
+
+  ngOnInit(): void {
+    // Tu pourras plus tard remplacer ça par un appel API
+  }
+
+  deleteUser(id: number) {
+    this.users = this.users.filter(user => user.id !== id);
+  }
 }

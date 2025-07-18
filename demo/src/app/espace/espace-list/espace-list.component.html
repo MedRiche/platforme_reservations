@@ -1,1 +1,17 @@
-<p>espace-list works!</p>
+<div class="container">
+  <h2>Liste des Espaces Disponibles</h2>
+
+  <div class="espace-card" *ngFor="let espace of espaces">
+    
+    <h3>{{ espace.nom }}</h3>
+    <p><strong>Type :</strong> {{ espace.type }}</p>
+    <p><strong>Capacité :</strong> {{ espace.capacite }} personnes</p>
+    <p><strong>Localisation :</strong> {{ espace.localisation }}</p>
+    <p><strong>Disponible :</strong>
+      <span [ngClass]="{ 'oui': espace.disponibilite, 'non': !espace.disponibilite }">
+        {{ espace.disponibilite ? 'Oui' : 'Non' }}
+      </span>
+    </p>
+    
+  </div>
+</div>

@@ -1,21 +1,23 @@
 // server.js
 const express = require('express');
 const mongoose = require('mongoose');
-const authRoutes = require('./routes/auth.routes');
-const espaceRoutes = require('./routes/espace.routes');
-const reservationRoutes = require('./routes/reservation.routes');
+const authRoutes = require('./routes/authRoutes');
+const espaceRoutes = require('./routes/espaceRoutes');
+const reservationRoutes = require('./routes/reservationRoutes');
+const statistiquesRoutes = require('./routes/statistiquesRoutes'); // Si tu as des statistiques
 const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+// ✅ Middlewares
+app.use(cors({ origin: 'http://localhost:4200' }));
+app.use(express.json()); // ← très important pour req.body
 
 app.use('/api/auth', authRoutes);
 app.use('/api/espaces', espaceRoutes);
 app.use('/api/reservations', reservationRoutes);
+app.use('/api/stats', statistiquesRoutes); // Si tu as des statistiques
 
 // Routes
 app.get('/', (req, res) => {
@@ -33,7 +35,7 @@ mongoose.connect(process.env.MONGO_URI, {
 });
 
 // Lancement du serveur
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

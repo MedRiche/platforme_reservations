@@ -1,0 +1,16 @@
+.container {
+  padding: 20px;
+}
+.espace-card {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+.oui {
+  color: green;
+}
+.non {
+  color: red;
+}

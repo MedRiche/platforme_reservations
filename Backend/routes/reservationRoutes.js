@@ -4,8 +4,8 @@ const {
   createReservation,
   getUserReservations,
   deleteReservation
-} = require('../controllers/reservation.controller');
-const auth = require('../middlewares/auth.middleware');
+} = require('../controllers/reservationController');
+const auth = require('../middlewares/auth');
 
 router.post('/', auth, createReservation);
 router.get('/mes-reservations', auth, getUserReservations);
