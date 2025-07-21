@@ -1,34 +1,36 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
 
-const API_URL = 'http://localhost:5000/api/reservations'; // adapte l'URL
+export interface Reservation {
+  _id?: string;
+  utilisateur?: string;
+  espace: string;
+  dateDebut: Date;
+  dateFin: Date;
+  statut?: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationService {
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  private apiUrl = 'http://localhost:3000/api/reservations'; // ⚠️ ajuste selon ton backend
 
-  private getHeaders() {
-    const token = this.authService.getToken();
-    return {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${token}`
-      })
-    };
+  constructor(private http: HttpClient) {}
+
+  // ➕ Créer une réservation
+  createReservation(reservation: Reservation): Observable<Reservation> {
+    return this.http.post<Reservation>(`${this.apiUrl}`, reservation);
   }
 
-  createReservation(data: any): Observable<any> {
-    return this.http.post(API_URL, data, this.getHeaders());
+  // 📄 Récupérer les réservations de l'utilisateur connecté
+  getMyReservations(): Observable<Reservation[]> {
+    return this.http.get<Reservation[]>(`${this.apiUrl}/mes-reservations`);
   }
 
-  getUserReservations(): Observable<any> {
-    return this.http.get(API_URL + '/me', this.getHeaders());
-  }
-
+  // ❌ Annuler une réservation
   cancelReservation(id: string): Observable<any> {
-    return this.http.delete(`${API_URL}/${id}`, this.getHeaders());
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

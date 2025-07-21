@@ -9,9 +9,11 @@ const {
 } = require('../controllers/espaceController');
 const auth = require('../middlewares/auth');
 const isAdmin = require('../middlewares/isAdmin');
+const upload = require('../middlewares/upload');
 
 // Toutes les routes protégées (admin uniquement si besoin)
-router.post('/',  auth , isAdmin, createEspace);
+// Ajouter `upload.single('image')` dans la route
+router.post('/', auth, isAdmin, upload.single('image'), createEspace);
 router.get('/',  getAllEspaces);
 router.get('/:id', getEspaceById);
 router.put('/:id', auth,isAdmin, updateEspace);

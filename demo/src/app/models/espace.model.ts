@@ -11,4 +11,6 @@ export interface Espace {
   disponibilite?: boolean;
   prixParHeure: number;
   description: string;
+  entreprise?: string; // Ajouté pour l'entreprise
+  imageUrl?: string; // Champ pour l'URL de l'image
 }

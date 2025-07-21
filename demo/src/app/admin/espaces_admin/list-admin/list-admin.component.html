@@ -13,6 +13,7 @@
           <th>Disponible</th>
           <th>Prix/h</th>
           <th>Description</th>
+          <th>Entreprise</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -25,6 +26,7 @@
           <td>{{ espace.disponibilite ? 'Oui' : 'Non' }}</td>
           <td>{{ espace.prixParHeure }} TND</td>
           <td>{{ espace.description }}</td>
+          <td>{{ espace.entreprise }}</td>
           <td>
             <button class="btn btn-primary btn-sm me-2" (click)="onEdit(espace._id!)">Modifier</button>
             <button class="btn btn-danger btn-sm" (click)="onDelete(espace._id!)">Supprimer</button>

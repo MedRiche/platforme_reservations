@@ -7,7 +7,7 @@ const espaceSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['salle', 'bureau', 'coworking', 'Amphi', 'hotel'],
+    enum: ['salle', 'bureau', 'coworking', 'Amphi', 'hotel', 'restaurant', 'autre'],
     required: true
   },
   capacite: {
@@ -29,7 +29,13 @@ const espaceSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true
-  }
+  },
+    entreprise: {
+    type: String,
+    required: true // si chaque espace doit appartenir à une entreprise
+  },
+   imageUrl: { type: String, required: true }, // Chemin de l'image
+  
 });
 
 module.exports = mongoose.model('Espace', espaceSchema);

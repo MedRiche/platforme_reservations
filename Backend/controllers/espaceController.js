@@ -1,9 +1,16 @@
 const Espace = require('../models/Espace');
 
+
+
 exports.createEspace = async (req, res) => {
   try {
-     console.log('Espace reçu:', req.body); // 👈 ajout
-    const espace = new Espace(req.body);
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
+    const espace = new Espace({
+      ...req.body,
+      imageUrl
+    });
+
     await espace.save();
     res.status(201).json(espace);
   } catch (err) {

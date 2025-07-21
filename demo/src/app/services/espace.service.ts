@@ -11,6 +11,7 @@ export interface Espace {
   disponibilite?: boolean;
   description: string;
   prixParHeure: number;
+  entreprise?: string; // Ajouté pour l'entreprise
 }
 
 @Injectable({

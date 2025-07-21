@@ -15,6 +15,8 @@ export class EspaceFormComponent implements OnInit {
   espaceId: string | null = null;
   isEdit = false;
 
+  selectedFile: File | null = null;
+
   constructor(
     private fb: FormBuilder,
     private espaceService: EspaceService,
@@ -32,6 +34,8 @@ this.espaceForm = this.fb.group({
   disponibilite: [true],
   prixParHeure: [0, Validators.required],
   description: ['', Validators.required],
+  entreprise: ['', Validators.required], // Ajout du champ entreprise
+  imageUrl: ['', Validators.required] // Champ pour l'URL de l'image
 });
 
     this.espaceId = this.route.snapshot.paramMap.get('id');
@@ -46,6 +50,8 @@ this.espaceForm = this.fb.group({
 
   onSubmit(): void {
     if (this.espaceForm.valid) {
+
+      
       const action = this.isEdit
         ? this.espaceService.updateEspace(this.espaceId!, this.espaceForm.value)
         : this.espaceService.ajouterEspace(this.espaceForm.value);
@@ -66,4 +72,13 @@ this.espaceForm = this.fb.group({
       });
     }
   }
+
+  onFileSelected(event: any): void {
+  const file: File = event.target.files[0];
+  if (file) {
+    this.selectedFile = file;
+  }
+}
+
+  
 }

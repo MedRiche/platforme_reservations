@@ -12,6 +12,9 @@
     <option value="coworking">Coworking</option>
     <option value="Amphi">Amphi</option>
     <option value="hotel">Hôtel</option>
+    <option value="restaurant">Restaurant</option>
+    <option value="autre">autre</option>
+
   </select>
 
   <label for="capacite">Capacité :</label>
@@ -29,6 +32,13 @@
   <label for="disponibilite">Disponible :</label>
   <input id="disponibilite" type="checkbox" formControlName="disponibilite" />
 
+  <label for="entreprise">Entreprise :</label>
+  <input id="entreprise" formControlName="entreprise" type="text"
+  placeholder="Nom de l'entreprise" />
+
+<label for="photo">Photo :</label>
+<input id="photo" type="file" (change)="onFileSelected($event)" />
+  
   <br /><br />
   <button type="submit">
     {{ isEdit ? 'Modifier' : 'Ajouter' }} l'espace

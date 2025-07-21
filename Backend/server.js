@@ -9,6 +9,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
+const path = require('path');
 
 // ✅ Middlewares
 app.use(cors({ origin: 'http://localhost:4200' }));
@@ -18,7 +19,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/espaces', espaceRoutes);
 app.use('/api/reservations', reservationRoutes);
 app.use('/api/stats', statistiquesRoutes); // Si tu as des statistiques
-
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 // Routes
 app.get('/', (req, res) => {
   res.send('API Running...');

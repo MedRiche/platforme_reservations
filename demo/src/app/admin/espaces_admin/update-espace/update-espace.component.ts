@@ -33,7 +33,10 @@ export class UpdateEspaceComponent implements OnInit {
       disponibilite: [true, Validators.required],
       prixParHeure: [0, Validators.required],
       localisation: ['', Validators.required],
-      type: ['', Validators.required]
+      type: ['', Validators.required],
+      entreprise: ['', Validators.required], // Ajout du champ entreprise
+      
+
     });
 
     // Récupération des données de l'espace par ID
@@ -46,7 +49,8 @@ export class UpdateEspaceComponent implements OnInit {
           disponibilite: data.disponibilite,
           prixParHeure: data.prixParHeure,
           localisation: data.localisation,
-          type: data.type
+          type: data.type,
+          entreprise: data.entreprise // Ajout du champ entreprise
         });
       },
       (error) => {
