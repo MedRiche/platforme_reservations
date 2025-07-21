@@ -20,11 +20,16 @@ export class EspaceListComponent implements OnInit {
 
   selectedEspace: Espace | null = null;
 
+
+  showSidebar: boolean = false;
+
 reservation = {
   date: '',
   heureDebut: '',
   heureFin: ''
 };
+
+ message: string = ''; // ✅ AJOUTE CETTE LIGNE ICI
 
   constructor(  private espaceService: EspaceService,
   private reservationService: ReservationService) {}
@@ -79,20 +84,22 @@ reserver() {
   dateFin
 };
 
-    this.reservationService.createReservation(payload).subscribe({
-      next: () => {
-        alert('✅ Réservation enregistrée !');
-        this.closeDetails();
-      },
-      error: (err) => {
-        alert('❌ Erreur : ' + err.error.message);
-        console.error(err);
-      }
-    });
+this.reservationService.createReservation(payload).subscribe({
+  next: (res) => {
+    this.message = 'Réservation confirmée et email envoyé ✅';
+  },
+  error: (err) => {
+    this.message = 'Erreur lors de la réservation ❌';
+  }
+});
+
   } else {
     alert('❗️ Veuillez remplir tous les champs de réservation.');
   }
 }
 
+toggleSidebar() {
+  this.showSidebar = !this.showSidebar;
+}
 }
 

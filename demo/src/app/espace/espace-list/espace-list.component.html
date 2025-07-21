@@ -1,112 +1,125 @@
-<div class="container mt-4">
-  <h2 class="text-center">Liste des Espaces Disponibles</h2>
+<div class="page">
+  <!-- Toggle Button -->
+  <button class="toggle-button" (click)="toggleSidebar()">☰ Menu</button>
 
-  <!-- Formulaire de filtrage -->
-  <div class="row mb-3">
-    <div class="col-md-5">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Filtrer par entreprise"
-        [(ngModel)]="filtreEntreprise"
-        (input)="applyFilter()"
-      />
-    </div>
-    <div class="col-md-5">
-      <select
-        class="form-control"
-        [(ngModel)]="filtreType"
-        (change)="applyFilter()"
-      >
-        <option value="">Tous les types</option>
-        <option value="salle">Salle</option>
-        <option value="bureau">Bureau</option>
-        <option value="coworking">Coworking</option>
-        <option value="Amphi">Amphi</option>
-        <option value="hotel">Hôtel</option>
-        <option value="restaurant">Restaurant</option>
-        <option value="autre">Autre</option>
-      </select>
-    </div>
+  <!-- Sidebar -->
+  <div class="sidebar" *ngIf="showSidebar">
+    <button class="btn btn-primary w-100 mb-2" routerLink="/profil">
+      👤 Mon Profil
+    </button>
+    <button class="btn btn-primary w-100" routerLink="/mes-reservations">
+      📅 Mes Réservations
+    </button>
   </div>
 
-  <!-- Liste des espaces -->
-  <div *ngIf="filteredEspaces.length > 0; else noEspaces" class="row">
-    <div class="col-md-4 mb-4" *ngFor="let espace of filteredEspaces">
-      <div class="card h-100 shadow-sm">
+  <!-- Contenu principal -->
+  <div class="main-content container mt-4">
+    <h2 class="text-center">Liste des Espaces Disponibles</h2>
 
+    <!-- Formulaire de filtrage -->
+    <div class="row mb-3">
+      <div class="col-md-5">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Filtrer par entreprise"
+          [(ngModel)]="filtreEntreprise"
+          (input)="applyFilter()"
+        />
+      </div>
+      <div class="col-md-5">
+        <select
+          class="form-control"
+          [(ngModel)]="filtreType"
+          (change)="applyFilter()"
+        >
+          <option value="">Tous les types</option>
+          <option value="salle">Salle</option>
+          <option value="bureau">Bureau</option>
+          <option value="coworking">Coworking</option>
+          <option value="Amphi">Amphi</option>
+          <option value="hotel">Hôtel</option>
+          <option value="restaurant">Restaurant</option>
+          <option value="autre">Autre</option>
+        </select>
+      </div>
+    </div>
 
-
-        <div class="card-body">
-          <h5 class="card-title">{{ espace.nom }}</h5>
-          <p><strong>Type :</strong> {{ espace.type }}</p>
-          <p><strong>Capacité :</strong> {{ espace.capacite }} personnes</p>
-          <p><strong>Localisation :</strong> {{ espace.localisation }}</p>
-          <p><strong>Disponible :</strong>
-            <span [ngClass]="{ 'text-success': espace.disponibilite, 'text-danger': !espace.disponibilite }">
-              {{ espace.disponibilite ? 'Oui' : 'Non' }}
-            </span>
-          </p>
-          <p><strong>Prix/h :</strong> {{ espace.prixParHeure }} TND</p>
-          <p><strong>Description :</strong> {{ espace.description }}</p>
-          <p><strong>Entreprise :</strong> {{ espace.entreprise }}</p>
-
-          <button class="btn btn-outline-primary mt-2" (click)="openDetails(espace)">Détails</button>
+    <!-- Liste des espaces -->
+    <div *ngIf="filteredEspaces.length > 0; else noEspaces" class="row">
+      <div class="col-md-4 mb-4" *ngFor="let espace of filteredEspaces">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ espace.nom }}</h5>
+            <p><strong>Type :</strong> {{ espace.type }}</p>
+            <p><strong>Capacité :</strong> {{ espace.capacite }} personnes</p>
+            <p><strong>Localisation :</strong> {{ espace.localisation }}</p>
+            <p><strong>Disponible :</strong>
+              <span [ngClass]="{ 'text-success': espace.disponibilite, 'text-danger': !espace.disponibilite }">
+                {{ espace.disponibilite ? 'Oui' : 'Non' }}
+              </span>
+            </p>
+            <p><strong>Prix/h :</strong> {{ espace.prixParHeure }} TND</p>
+            <p><strong>Description :</strong> {{ espace.description }}</p>
+            <p><strong>Entreprise :</strong> {{ espace.entreprise }}</p>
+            <button class="btn btn-outline-primary mt-2" (click)="openDetails(espace)">Détails</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
+    <!-- MODALE DETAILS -->
+    <div
+      class="modal fade show"
+      tabindex="-1"
+      [ngClass]="{ 'd-block': selectedEspace }"
+      *ngIf="selectedEspace"
+      style="background: rgba(0,0,0,0.5);"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ selectedEspace.nom }} - Détails</h5>
+            <button type="button" class="btn-close" (click)="closeDetails()"></button>
+          </div>
+          <div class="modal-body">
+            <p><strong>Type :</strong> {{ selectedEspace.type }}</p>
+            <p><strong>Capacité :</strong> {{ selectedEspace.capacite }} personnes</p>
+            <p><strong>Localisation :</strong> {{ selectedEspace.localisation }}</p>
+            <p><strong>Disponible :</strong> {{ selectedEspace.disponibilite ? 'Oui' : 'Non' }}</p>
+            <p><strong>Prix/h :</strong> {{ selectedEspace.prixParHeure }} TND</p>
+            <p><strong>Description :</strong> {{ selectedEspace.description }}</p>
+            <p><strong>Entreprise :</strong> {{ selectedEspace.entreprise }}</p>
 
-<!-- MODALE DETAILS -->
-<div
-  class="modal fade show"
-  tabindex="-1"
-  [ngClass]="{ 'd-block': selectedEspace }"
-  *ngIf="selectedEspace"
-  style="background: rgba(0,0,0,0.5);"
->
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">{{ selectedEspace.nom }} - Détails</h5>
-        <button type="button" class="btn-close" (click)="closeDetails()"></button>
-      </div>
-      <div class="modal-body">
-        <p><strong>Type :</strong> {{ selectedEspace.type }}</p>
-        <p><strong>Capacité :</strong> {{ selectedEspace.capacite }} personnes</p>
-        <p><strong>Localisation :</strong> {{ selectedEspace.localisation }}</p>
-        <p><strong>Disponible :</strong> {{ selectedEspace.disponibilite ? 'Oui' : 'Non' }}</p>
-        <p><strong>Prix/h :</strong> {{ selectedEspace.prixParHeure }} TND</p>
-        <p><strong>Description :</strong> {{ selectedEspace.description }}</p>
-        <p><strong>Entreprise :</strong> {{ selectedEspace.entreprise }}</p>
-
-        <!-- Formulaire Réservation -->
-        <div class="mt-4 border-top pt-3">
-          <h6>Réserver cet espace</h6>
-          <form (ngSubmit)="reserver()" #resForm="ngForm">
-            <div class="mb-2">
-              <label>Date</label>
-              <input type="date" class="form-control" [(ngModel)]="reservation.date" name="date" required>
+            <!-- Formulaire Réservation -->
+            <div class="mt-4 border-top pt-3">
+              <h6>Réserver cet espace</h6>
+              <form (ngSubmit)="reserver()" #resForm="ngForm">
+                <div class="mb-2">
+                  <label>Date</label>
+                  <input type="date" class="form-control" [(ngModel)]="reservation.date" name="date" required>
+                </div>
+                <div class="mb-2">
+                  <label>Heure de début</label>
+                  <input type="time" class="form-control" [(ngModel)]="reservation.heureDebut" name="heureDebut" required>
+                </div>
+                <div class="mb-2">
+                  <label>Heure de fin</label>
+                  <input type="time" class="form-control" [(ngModel)]="reservation.heureFin" name="heureFin" required>
+                </div>
+                <button type="submit" class="btn btn-success mt-2">Réserver</button>
+                <div *ngIf="message" class="alert alert-info mt-2 text-center">
+                  {{ message }}
+                </div>
+              </form>
             </div>
-            <div class="mb-2">
-              <label>Heure de début</label>
-              <input type="time" class="form-control" [(ngModel)]="reservation.heureDebut" name="heureDebut" required>
-            </div>
-            <div class="mb-2">
-              <label>Heure de fin</label>
-              <input type="time" class="form-control" [(ngModel)]="reservation.heureFin" name="heureFin" required>
-            </div>
-            <button type="submit" class="btn btn-success mt-2">Réserver</button>
-          </form>
+          </div>
         </div>
       </div>
     </div>
+
+    <ng-template #noEspaces>
+      <div class="alert alert-warning text-center mt-3">Aucun espace trouvé avec les filtres sélectionnés.</div>
+    </ng-template>
   </div>
-</div>
-
-
-  <ng-template #noEspaces>
-    <div class="alert alert-warning text-center mt-3">Aucun espace trouvé avec les filtres sélectionnés.</div>
-  </ng-template>
 </div>

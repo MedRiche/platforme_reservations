@@ -15,10 +15,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 
 
+
 import { EspaceService } from './services/espace.service';
 import { UpdateEspaceComponent } from './admin/espaces_admin/update-espace/update-espace.component';
 import { ListAdminComponent } from './admin/espaces_admin/list-admin/list-admin.component';
 
+import { ProfilComponent } from './profil/profil/profil.component';
 
 
 const routes: Routes = [
@@ -42,9 +44,11 @@ const routes: Routes = [
 {path : 'admin/update-espace/:id', component: UpdateEspaceComponent},
 { path : 'admin/espace-form', component: EspaceFormComponent },
 { path: 'admin/esp', component: ListAdminComponent},
-{path: 'admin/list-espaces', component: ListAdminComponent , canActivate: [AuthGuard]}
+{path: 'admin/list-espaces', component: ListAdminComponent , canActivate: [AuthGuard]},
 
 
+{ path: 'profil', component: ProfilComponent },
+{ path: 'mes-reservations', component: ReservationListComponent },
 
 
  
