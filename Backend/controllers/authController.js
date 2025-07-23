@@ -40,3 +40,32 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+
+
+exports.updateProfile = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { nom, email } = req.body;
+
+    if (!nom || !email) {
+      return res.status(400).json({ message: "Nom et email requis" });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { nom, email },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    res.json({ message: "Profil mis à jour avec succès", user: updatedUser });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Erreur lors de la mise à jour", error: err.message });
+  }
+};
+

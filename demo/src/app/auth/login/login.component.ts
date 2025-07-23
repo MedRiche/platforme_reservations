@@ -20,6 +20,7 @@ export class LoginComponent {
 
     this.authService.login(data).subscribe({
       next: (res: any) => {
+        this.authService.saveUser(res.user);
         this.authService.saveToken(res.token); // facultatif
         const role = res.user?.role;
 

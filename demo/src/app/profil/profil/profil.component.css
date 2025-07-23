@@ -1,0 +1,22 @@
+.profil-container {
+  max-width: 400px;
+  margin: auto;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+  display: block;
+}
+
+button {
+  margin-top: 10px;
+  padding: 8px 12px;
+}
+
+.logout-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}

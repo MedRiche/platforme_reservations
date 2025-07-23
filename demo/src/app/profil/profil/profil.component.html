@@ -1,1 +1,27 @@
-<p>profil works!</p>
+<div class="profil-container">
+  <h2>Mon Profil</h2>
+
+  <div *ngIf="user; else nonConnecte">
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <label for="nom">Nom:</label>
+      <input id="nom" type="text" formControlName="nom" />
+      <div *ngIf="profileForm.get('nom')?.invalid && profileForm.get('nom')?.touched">
+        Nom requis.
+      </div>
+
+      <label for="email">Email:</label>
+      <input id="email" type="email" formControlName="email" />
+      <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+        Email valide requis.
+      </div>
+
+      <button type="submit" [disabled]="profileForm.invalid">Mettre à jour</button>
+    </form>
+
+    <button (click)="logout()" class="logout-button">Déconnexion</button>
+  </div>
+
+  <ng-template #nonConnecte>
+    <p>Utilisateur non connecté.</p>
+  </ng-template>
+</div>
