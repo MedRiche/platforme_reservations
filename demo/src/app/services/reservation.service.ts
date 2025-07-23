@@ -2,10 +2,23 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+
+export interface Espace {
+  _id: string;
+  nom: string;
+  type: string;
+  capacite: number;
+  localisation: string;
+  disponibilite?: boolean;
+  description: string;
+  prixParHeure: number;
+  entreprise?: string; // Ajouté pour l'entreprise
+}
+
 export interface Reservation {
   _id?: string;
   utilisateur?: string;
-  espace: string;
+  espace: string | Espace; // <-- bien vu ici
   dateDebut: Date;
   dateFin: Date;
   statut?: string;

@@ -54,6 +54,7 @@ exports.createReservation = async (req, res) => {
 exports.getUserReservations = async (req, res) => {
   try {
     const reservations = await Reservation.find({ utilisateur: req.user.id }).populate('espace');
+
     res.json(reservations);
   } catch (err) {
     res.status(500).json({ message: err.message });

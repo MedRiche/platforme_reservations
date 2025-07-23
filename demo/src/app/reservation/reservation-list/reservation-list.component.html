@@ -1,1 +1,23 @@
-<p>reservation-list works!</p>
+<div class="container">
+  <h2>Mes Réservations</h2>
+
+  <div *ngIf="message" class="alert alert-info">{{ message }}</div>
+
+  <div *ngIf="reservations.length === 0">
+    Aucune réservation pour le moment.
+  </div>
+
+  <div *ngFor="let r of reservations" class="card my-2 p-2">
+<p><strong>Espace :</strong> {{ getEspaceNom(r.espace) }}</p>
+<ng-template #espaceId>
+  <p><strong>Espace :</strong> {{ r.espace }}</p>
+</ng-template>
+
+    <p><strong>Date début :</strong> {{ r.dateDebut | date:'short' }}</p>
+    <p><strong>Date fin :</strong> {{ r.dateFin | date:'short' }}</p>
+    <p><strong>Statut :</strong> {{ r.statut }}</p>
+    <button (click)="annulerReservation(r._id!)" class="btn btn-danger btn-sm" *ngIf="r.statut !== 'annulée'">
+      Annuler
+    </button>
+  </div>
+</div>
