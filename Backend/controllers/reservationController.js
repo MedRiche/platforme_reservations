@@ -63,7 +63,7 @@ exports.getUserReservations = async (req, res) => {
 
 exports.deleteReservation = async (req, res) => {
   try {
-    const reservation = await Reservation.findById(req.params.id);
+    const reservation = await Reservation.findByIdAndDelete(req.params.id);
     if (!reservation) return res.status(404).json({ message: 'Réservation non trouvée' });
 
     // Vérifie si c’est le bon utilisateur

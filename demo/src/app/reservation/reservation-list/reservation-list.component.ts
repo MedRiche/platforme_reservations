@@ -32,20 +32,19 @@ export class ReservationListComponent implements OnInit {
     });
   }
 
-  annulerReservation(id: string): void {
-    if (confirm('Confirmer l’annulation de cette réservation ?')) {
-      this.reservationService.cancelReservation(id).subscribe({
-        next: () => {
-          this.message = 'Réservation annulée.';
-          this.getReservations(); // Rafraîchir la liste
-        },
-        error: (err) => {
-          console.error(err);
-          this.message = 'Erreur lors de l’annulation.';
-        }
-      });
+annulerReservation(id: string) {
+  this.reservationService.cancelReservation(id).subscribe({
+    next: () => {
+      this.message = 'Réservation annulée avec succès.';
+      this.getReservations(); // pour rafraîchir la liste
+    },
+    error: (err) => {
+      console.error('Erreur lors de l’annulation :', err);
+      this.message = "Erreur lors de l’annulation.";
     }
-  }
+  });
+}
+
 
 
   isEspaceObject(espace: any): espace is Espace {
