@@ -1,17 +1,62 @@
+<!-- src/app/admin/dashboard/dashboard.component.html -->
 <div class="container mt-5">
-  <h2 class="text-center">Bienvenue sur le tableau de bord Admin</h2>
+  <h2 class="text-center mb-4">📊 Tableau de bord Admin</h2>
 
-  <div class="text-center mt-4">
-<button class="btn btn-primary" (click)="redirigerVersEspaces()">
-    gérer les Espaces
-  </button>
-  <button class="btn btn-secondary ms-3" (click)="redirigerVersReservations()">
-    Gérer les Réservations
-  </button>
-    
+  <div class="d-flex justify-content-center gap-2 mb-3">
+    <button class="btn btn-primary" (click)="redirigerVersEspaces()">Gérer les Espaces</button>
+    <button class="btn btn-secondary" (click)="redirigerVersReservations()">Gérer les Réservations</button>
+  </div>
 
+  <div *ngIf="loading" class="text-center my-4">
+    <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+  </div>
 
+  <div *ngIf="error" class="alert alert-danger text-center">{{ error }}</div>
 
+  <div *ngIf="!loading && stats">
+    <div class="row text-center mb-4">
+      <div class="col-md-4 mb-3">
+        <div class="card shadow-sm p-3">
+          <h5>Espaces</h5>
+          <h2 class="text-primary">{{ stats.totalEspaces ?? 0 }}</h2>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card shadow-sm p-3">
+          <h5>Réservations</h5>
+          <h2 class="text-success">{{ stats.totalReservations ?? 0 }}</h2>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card shadow-sm p-3">
+          <h5>Utilisateurs</h5>
+          <h2 class="text-warning">{{ stats.totalUtilisateurs ?? 0 }}</h2>
+        </div>
+      </div>
+    </div>
 
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="card p-3">
+          <h6 class="text-center">Réservations par statut</h6>
+          <canvas baseChart
+                  [data]="donutChartData"
+                  [options]="chartOptions"
+                  [type]="'doughnut'">
+          </canvas>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-4">
+        <div class="card p-3">
+          <h6 class="text-center">Top 5 Espaces les plus réservés</h6>
+          <canvas baseChart
+                  [data]="barChartData"
+                  [options]="chartOptions"
+                  [type]="'bar'">
+          </canvas>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

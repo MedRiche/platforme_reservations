@@ -28,6 +28,8 @@ import { ListAdminComponent } from './admin/espaces_admin/list-admin/list-admin.
 import { ProfilComponent } from './profil/profil/profil.component';
 import { ReservationAdminListComponent } from './admin/reservation/reservation-admin-list/reservation-admin-list.component';
 
+import { NgChartsModule } from 'ng2-charts'; // Import NgChartsModule for charts
+
 
 
 @NgModule({
@@ -47,12 +49,14 @@ import { ReservationAdminListComponent } from './admin/reservation/reservation-a
     ListAdminComponent,
     ProfilComponent,
     ReservationAdminListComponent,
+
     
 
 
     
   ],
   imports: [
+    
      BrowserModule,
     FormsModule, // <- Ajoute ceci si absent
     HttpClientModule,
@@ -62,6 +66,11 @@ import { ReservationAdminListComponent } from './admin/reservation/reservation-a
      BrowserAnimationsModule,
     MatSnackBarModule,
     CommonModule,
+    NgChartsModule,// <- Ajoute NgChartsModule pour les graphiques
+    
+    
+
+
 
     
   ],

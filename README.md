@@ -72,3 +72,5 @@ npm install --save-dev nodemon
 npm install bootstrap
 npm install @auth0/angular-jwt
 npm install fullcalendar @fullcalendar/angular @fullcalendar/daygrid
+
+npm install chart.js ng2-charts
