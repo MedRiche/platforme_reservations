@@ -3,8 +3,10 @@ const router = express.Router();
 const {
   createReservation,
   getUserReservations,
-  deleteReservation
+  deleteReservation,
+   
 } = require('../controllers/reservationController');
+
 const auth = require('../middlewares/auth');
 
 router.post('/', auth, createReservation);

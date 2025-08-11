@@ -21,7 +21,7 @@ import { UpdateEspaceComponent } from './admin/espaces_admin/update-espace/updat
 import { ListAdminComponent } from './admin/espaces_admin/list-admin/list-admin.component';
 
 import { ProfilComponent } from './profil/profil/profil.component';
-
+import { ReservationAdminListComponent } from './admin/reservation/reservation-admin-list/reservation-admin-list.component';
 
 const routes: Routes = [
     // Auth
@@ -45,7 +45,8 @@ const routes: Routes = [
 { path : 'admin/espace-form', component: EspaceFormComponent },
 { path: 'admin/esp', component: ListAdminComponent},
 {path: 'admin/list-espaces', component: ListAdminComponent , canActivate: [AuthGuard]},
-
+{path: 'admin/users', component: UsersComponent, canActivate: [AuthGuard]},
+{path: 'admin/reservations', component: ReservationAdminListComponent, canActivate: [AuthGuard]},
 
 { path: 'profil', component: ProfilComponent },
 { path: 'mes-reservations', component: ReservationListComponent },

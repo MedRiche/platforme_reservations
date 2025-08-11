@@ -3,6 +3,7 @@ const { sendReservationMail } = require('../utils/mailer');
 const User = require('../models/User');
 const Espace = require('../models/Espace');
 const { sendAnnulationMail } = require('../utils/mailer');
+const { sendConfirmationStatutMail } = require('../utils/mailer');
 
 exports.createReservation = async (req, res) => {
   try {
@@ -29,7 +30,8 @@ exports.createReservation = async (req, res) => {
       utilisateur,
       espace,
       dateDebut,
-      dateFin
+      dateFin,
+      statut: 'en attente' // ✅ ici
     });
 
     await nouvelleReservation.save();
@@ -98,5 +100,39 @@ exports.deleteReservation = async (req, res) => {
   } catch (error) {
     console.error('Erreur lors de l’annulation:', error);
     res.status(500).json({ message: 'Erreur lors de l’annulation.' });
+  }
+};
+
+
+// PATCH /api/reservations/:id/confirmer
+exports.confirmerReservation = async (req, res) => {
+  try {
+    console.log("📌 Tentative confirmation réservation :", req.params.id);
+    const reservation = await Reservation.findById(req.params.id)
+      .populate('utilisateur')
+      .populate('espace');
+
+    if (!reservation) {
+      console.log("❌ Réservation introuvable");
+      return res.status(404).json({ message: 'Réservation non trouvée' });
+    }
+
+    reservation.statut = 'confirmée';
+    await reservation.save();
+
+    console.log("✅ Statut mis à jour, envoi email à :", reservation.utilisateur.email);
+
+    await sendConfirmationStatutMail(
+      reservation.utilisateur.email,
+      reservation.espace.nom,
+      reservation.dateDebut,
+      reservation.dateFin
+    );
+
+    res.json({ message: 'Réservation confirmée avec succès' });
+
+  } catch (err) {
+    console.error("💥 Erreur lors de la confirmation :", err);
+    res.status(500).json({ message: 'Erreur lors de la confirmation.' });
   }
 };

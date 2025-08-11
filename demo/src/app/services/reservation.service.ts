@@ -52,6 +52,13 @@ cancelReservation(id: string): Observable<any> {
   return this.http.get<any[]>(`http://localhost:3000/api/reservations/user/${userId}`);
 }
 
+getAllReservations(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}`);
+  }
+
+
+
+
 
 
 }

@@ -26,6 +26,7 @@ import { EspaceService } from './services/espace.service';
 import { UpdateEspaceComponent } from './admin/espaces_admin/update-espace/update-espace.component';
 import { ListAdminComponent } from './admin/espaces_admin/list-admin/list-admin.component';
 import { ProfilComponent } from './profil/profil/profil.component';
+import { ReservationAdminListComponent } from './admin/reservation/reservation-admin-list/reservation-admin-list.component';
 
 
 
@@ -45,6 +46,8 @@ import { ProfilComponent } from './profil/profil/profil.component';
     UpdateEspaceComponent,
     ListAdminComponent,
     ProfilComponent,
+    ReservationAdminListComponent,
+    
 
 
     

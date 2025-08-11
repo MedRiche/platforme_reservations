@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const espaceRoutes = require('./routes/espaceRoutes');
 const reservationRoutes = require('./routes/reservationRoutes');
+const adminReservationsRoutes = require('./routes/adminReservationsRoutes');
 const statistiquesRoutes = require('./routes/statistiquesRoutes'); // Si tu as des statistiques
 const cors = require('cors');
 require('dotenv').config();
@@ -17,8 +18,9 @@ app.use(express.json()); // ← très important pour req.body
 
 app.use('/api/auth', authRoutes);
 app.use('/api/espaces', espaceRoutes);
+app.use('/api/admin/reservations', adminReservationsRoutes); // Routes pour les réservations admin
 app.use('/api/reservations', reservationRoutes);
-app.use('/api/stats', statistiquesRoutes); // Si tu as des statistiques
+app.use('/api/admin/statistiques', statistiquesRoutes); // Si tu as des statistiques
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 // Routes
 app.get('/', (req, res) => {
