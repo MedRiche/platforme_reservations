@@ -1,23 +1,35 @@
-<div class="container">
-  <h2>Mes Réservations</h2>
+<div class="container my-4">
+  <h2 class="mb-4">📅 Mes Réservations</h2>
 
   <div *ngIf="message" class="alert alert-info">{{ message }}</div>
 
-  <div *ngIf="reservations.length === 0">
-    Aucune réservation pour le moment.
-  </div>
+  <full-calendar [options]="calendarOptions"></full-calendar>
 
-  <div *ngFor="let r of reservations" class="card my-2 p-2">
-<p><strong>Espace :</strong> {{ getEspaceNom(r.espace) }}</p>
-<ng-template #espaceId>
-  <p><strong>Espace :</strong> {{ r.espace }}</p>
-</ng-template>
-
-    <p><strong>Date début :</strong> {{ r.dateDebut | date:'short' }}</p>
-    <p><strong>Date fin :</strong> {{ r.dateFin | date:'short' }}</p>
-    <p><strong>Statut :</strong> {{ r.statut }}</p>
-    <button (click)="annulerReservation(r._id!)" class="btn btn-danger btn-sm" *ngIf="r.statut !== 'annulée'">
-      Annuler
-    </button>
+  <!-- Modal -->
+  <div class="modal" tabindex="-1" [ngClass]="{'show': showModal}" [ngStyle]="{'display': showModal ? 'block' : 'none'}">
+    <div class="modal-dialog">
+      <div class="modal-content bg-white">
+        <div class="modal-header">
+          <h5 class="modal-title">Détails de la réservation</h5>
+          <button type="button" class="btn-close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body" *ngIf="selectedReservation">
+          <p><strong>Espace :</strong> {{ getEspaceNom(selectedReservation.espace) }}</p>
+          <p><strong>Date début :</strong> {{ selectedReservation.dateDebut | date:'short' }}</p>
+          <p><strong>Date fin :</strong> {{ selectedReservation.dateFin | date:'short' }}</p>
+          <p><strong>Statut :</strong> {{ selectedReservation.statut }}</p>
+         
+        </div>
+        <div class="modal-footer">
+          <button *ngIf="selectedReservation?.statut !== 'annulée'"
+                  type="button"
+                  class="btn btn-danger"
+                  (click)="annulerReservation(selectedReservation!._id!)">
+            Annuler
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Fermer</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
