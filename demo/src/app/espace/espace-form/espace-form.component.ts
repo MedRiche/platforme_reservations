@@ -29,13 +29,13 @@ export class EspaceFormComponent implements OnInit {
 this.espaceForm = this.fb.group({
   nom: ['', Validators.required],
   type: ['', Validators.required],
-  capacite: [0, Validators.required],
+  capacite: [0, [Validators.required, Validators.min(1)]],
   localisation: ['', Validators.required],
   disponibilite: [true],
-  prixParHeure: [0, Validators.required],
+  prixParHeure: [0, [Validators.required, Validators.min(0)]],
   description: ['', Validators.required],
-  entreprise: ['', Validators.required], // Ajout du champ entreprise
-  imageUrl: ['', Validators.required] // Champ pour l'URL de l'image
+  entreprise: ['', Validators.required],
+  
 });
 
     this.espaceId = this.route.snapshot.paramMap.get('id');
@@ -73,12 +73,7 @@ this.espaceForm = this.fb.group({
     }
   }
 
-  onFileSelected(event: any): void {
-  const file: File = event.target.files[0];
-  if (file) {
-    this.selectedFile = file;
-  }
-}
+
 
   
 }

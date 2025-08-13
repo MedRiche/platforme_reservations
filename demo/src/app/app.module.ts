@@ -29,7 +29,7 @@ import { ProfilComponent } from './profil/profil/profil.component';
 import { ReservationAdminListComponent } from './admin/reservation/reservation-admin-list/reservation-admin-list.component';
 
 import { NgChartsModule } from 'ng2-charts'; // Import NgChartsModule for charts
-
+import { FullCalendarModule } from '@fullcalendar/angular'; // <-- fullcalendar
 
 
 @NgModule({
@@ -67,7 +67,7 @@ import { NgChartsModule } from 'ng2-charts'; // Import NgChartsModule for charts
     MatSnackBarModule,
     CommonModule,
     NgChartsModule,// <- Ajoute NgChartsModule pour les graphiques
-    
+    FullCalendarModule, // <-- IMPORTANT
     
 
 

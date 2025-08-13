@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient , HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
@@ -19,8 +19,8 @@ export interface Reservation {
   _id?: string;
   utilisateur?: string;
   espace: string | Espace; // <-- bien vu ici
-  dateDebut: Date;
-  dateFin: Date;
+  dateDebut: Date | string;
+  dateFin: Date | string;
   statut?: string;
 }
 
@@ -31,6 +31,14 @@ export class ReservationService {
   private apiUrl = 'http://localhost:3000/api/reservations'; // ⚠️ ajuste selon ton backend
 
   constructor(private http: HttpClient) {}
+
+  private authHeaders(): { headers: HttpHeaders } {
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return { headers };
+  }
 
   // ➕ Créer une réservation
   createReservation(reservation: Reservation): Observable<Reservation> {
@@ -57,7 +65,10 @@ getAllReservations(): Observable<any[]> {
   }
 
 
-
+  // nouvelles méthodes :
+  getReservationsByEspace(espaceId: string): Observable<Reservation[]> {
+    return this.http.get<Reservation[]>(`${this.apiUrl}/espace/${espaceId}`);
+  }
 
 
 

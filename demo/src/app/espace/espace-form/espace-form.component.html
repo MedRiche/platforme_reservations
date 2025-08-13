@@ -1,46 +1,78 @@
 <h2>{{ isEdit ? 'Modifier' : 'Ajouter' }} un espace</h2>
 
-<form [formGroup]="espaceForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="espaceForm" (ngSubmit)="onSubmit()" novalidate>
 
-  <label for="nom">Nom :</label>
-  <input id="nom" formControlName="nom" type="text" />
+  <div class="form-group">
+    <label for="nom">Nom <span class="required">*</span></label>
+    <input id="nom" formControlName="nom" type="text" />
+    <small class="error" *ngIf="espaceForm.get('nom')?.touched && espaceForm.get('nom')?.invalid">
+      Le nom est requis.
+    </small>
+  </div>
 
-  <label for="type">Type :</label>
-  <select id="type" formControlName="type">
-    <option value="salle">Salle</option>
-    <option value="bureau">Bureau</option>
-    <option value="coworking">Coworking</option>
-    <option value="Amphi">Amphi</option>
-    <option value="hotel">Hôtel</option>
-    <option value="restaurant">Restaurant</option>
-    <option value="autre">autre</option>
+  <div class="form-group">
+    <label for="type">Type <span class="required">*</span></label>
+    <select id="type" formControlName="type">
+      <option value="" disabled>-- Sélectionnez un type --</option>
+      <option value="salle">Salle</option>
+      <option value="bureau">Bureau</option>
+      <option value="coworking">Coworking</option>
+      <option value="Amphi">Amphi</option>
+      <option value="hotel">Hôtel</option>
+      <option value="restaurant">Restaurant</option>
+      <option value="autre">Autre</option>
+    </select>
+    <small class="error" *ngIf="espaceForm.get('type')?.touched && espaceForm.get('type')?.invalid">
+      Le type est requis.
+    </small>
+  </div>
 
-  </select>
+  <div class="form-group">
+    <label for="capacite">Capacité <span class="required">*</span></label>
+    <input id="capacite" formControlName="capacite" type="number" min="1" />
+    <small class="error" *ngIf="espaceForm.get('capacite')?.touched && espaceForm.get('capacite')?.invalid">
+      La capacité doit être un nombre supérieur à 0.
+    </small>
+  </div>
 
-  <label for="capacite">Capacité :</label>
-  <input id="capacite" formControlName="capacite" type="number" />
+  <div class="form-group">
+    <label for="localisation">Localisation <span class="required">*</span></label>
+    <input id="localisation" formControlName="localisation" type="text" />
+    <small class="error" *ngIf="espaceForm.get('localisation')?.touched && espaceForm.get('localisation')?.invalid">
+      La localisation est requise.
+    </small>
+  </div>
 
-  <label for="localisation">Localisation :</label>
-  <input id="localisation" formControlName="localisation" type="text" />
+  <div class="form-group">
+    <label for="prixParHeure">Prix par heure (DT) <span class="required">*</span></label>
+    <input id="prixParHeure" formControlName="prixParHeure" type="number" min="0" step="0.1" />
+    <small class="error" *ngIf="espaceForm.get('prixParHeure')?.touched && espaceForm.get('prixParHeure')?.invalid">
+      Le prix doit être supérieur ou égal à 0.
+    </small>
+  </div>
 
-  <label for="prixParHeure">Prix par heure (DT) :</label>
-  <input id="prixParHeure" formControlName="prixParHeure" type="number" step="0.1" />
+  <div class="form-group">
+    <label for="description">Description <span class="required">*</span></label>
+    <textarea id="description" formControlName="description" rows="4"></textarea>
+    <small class="error" *ngIf="espaceForm.get('description')?.touched && espaceForm.get('description')?.invalid">
+      La description est requise.
+    </small>
+  </div>
 
-  <label for="description">Description :</label>
-  <textarea id="description" formControlName="description" rows="3"></textarea>
+  <div class="form-group checkbox-group">
+    <input id="disponibilite" type="checkbox" formControlName="disponibilite" />
+    <label for="disponibilite">Disponible</label>
+  </div>
 
-  <label for="disponibilite">Disponible :</label>
-  <input id="disponibilite" type="checkbox" formControlName="disponibilite" />
+  <div class="form-group">
+    <label for="entreprise">Entreprise <span class="required">*</span></label>
+    <input id="entreprise" formControlName="entreprise" type="text" placeholder="Nom de l'entreprise" />
+    <small class="error" *ngIf="espaceForm.get('entreprise')?.touched && espaceForm.get('entreprise')?.invalid">
+      Le nom de l'entreprise est requis.
+    </small>
+  </div>
 
-  <label for="entreprise">Entreprise :</label>
-  <input id="entreprise" formControlName="entreprise" type="text"
-  placeholder="Nom de l'entreprise" />
-
-<label for="photo">Photo :</label>
-<input id="photo" type="file" (change)="onFileSelected($event)" />
-  
-  <br /><br />
-  <button type="submit">
+  <button type="submit" [disabled]="espaceForm.invalid">
     {{ isEdit ? 'Modifier' : 'Ajouter' }} l'espace
   </button>
 </form>

@@ -4,11 +4,10 @@ const Espace = require('../models/Espace');
 
 exports.createEspace = async (req, res) => {
   try {
-    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
-
+    
     const espace = new Espace({
       ...req.body,
-      imageUrl
+      
     });
 
     await espace.save();

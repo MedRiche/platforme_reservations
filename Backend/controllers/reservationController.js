@@ -136,3 +136,19 @@ exports.confirmerReservation = async (req, res) => {
     res.status(500).json({ message: 'Erreur lors de la confirmation.' });
   }
 };
+
+
+// GET /api/reservations/espace/:id
+exports.getReservationsByEspace = async (req, res) => {
+  try {
+    const espaceId = req.params.id;
+    const reservations = await Reservation.find({
+      espace: espaceId,
+      statut: { $ne: 'annulée' } // ignore annulées
+    });
+    res.json(reservations);
+  } catch (err) {
+    console.error('Erreur getReservationsByEspace:', err);
+    res.status(500).json({ message: err.message });
+  }
+};
