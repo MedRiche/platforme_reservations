@@ -1,14 +1,19 @@
-<div class="login-container">
-  <h2>Connexion</h2>
-  <form (ngSubmit)="onLogin()">
-    <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required />
-    <input type="password" [(ngModel)]="motDePasse" name="motDePasse" placeholder="Mot de passe" required />
-    <button type="submit">Se connecter</button>
-  </form>
+<div class="auth-container">
+  <!-- Illustration -->
+  <div class="auth-image">
+    <img src="https://img.freepik.com/free-vector/professional-coworking-space-logo_23-2149455584.jpg?t=st=1755528944~exp=1755532544~hmac=38e43eb2c6a26869cdb396f58d487e0b3b77e49bc9c4a428af2af4dc309f0d72&w=1060" alt="workspace logo">
+  </div>
 
-  <p *ngIf="error" class="error">{{ error }}</p>
+  <!-- Login Form -->
+  <div class="auth-form">
+    <h2>Connexion</h2>
+    <form (ngSubmit)="onLogin()">
+      <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required />
+      <input type="password" [(ngModel)]="motDePasse" name="motDePasse" placeholder="Mot de passe" required />
+      <button type="submit">Se connecter</button>
+    </form>
 
-  <div class="link">
+    <p *ngIf="error" class="error">{{ error }}</p>
     <p>Pas encore de compte ? <a routerLink="/register">Inscrivez-vous</a></p>
   </div>
 </div>

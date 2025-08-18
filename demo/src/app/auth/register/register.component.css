@@ -1,21 +1,117 @@
-.register-container {
-  max-width: 400px;
-  margin: auto;
-  padding: 2rem;
-  text-align: center;
+/* === Global Auth Styles === */
+.auth-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+  background: #f9fafc;
+  padding: 40px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-input {
-  display: block;
+
+.auth-form {
+  flex: 1;
+  max-width: 420px;
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 15px;
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.auth-form h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"] {
   width: 100%;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s;
 }
-button {
-  padding: 0.5rem 1rem;
+
+.auth-form input:focus {
+  border-color: #007bff;
+  box-shadow: 0px 0px 6px rgba(0, 123, 255, 0.4);
 }
-.error {
-  color: red;
+
+.auth-form button {
+  width: 100%;
+  background: #007bff;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
-.success {
-  color: green;
+
+.auth-form button:hover {
+  background: #0056b3;
+}
+
+.auth-form .error {
+  color: #e74c3c;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.auth-form .success {
+  color: #2ecc71;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.auth-form p {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.auth-form a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.auth-form a:hover {
+  text-decoration: underline;
+}
+
+/* === Image / Illustration Side === */
+.auth-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-image img {
+  width: 80%;
+  max-width: 450px;
+  height: auto;
+}
+
+/* === Responsive === */
+@media (max-width: 992px) {
+  .auth-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .auth-form {
+    max-width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .auth-image img {
+    width: 60%;
+  }
 }

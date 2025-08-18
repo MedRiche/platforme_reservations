@@ -1,17 +1,22 @@
-<div class="register-container">
-  <h2>Inscription</h2>
-  <form (ngSubmit)="onRegister()">
-    <input type="text" [(ngModel)]="nom" name="nom" placeholder="Nom" required />
-    <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required />
-    <input type="password" [(ngModel)]="motDePasse" name="motDePasse" placeholder="Mot de passe" required />
-    <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="Confirmer le mot de passe" required />
-    <button type="submit">S'inscrire</button>
-  </form>
+<div class="auth-container">
+  <!-- Form -->
+  <div class="auth-form">
+    <h2>Créer un compte</h2>
+    <form (ngSubmit)="onRegister()">
+      <input type="text" [(ngModel)]="nom" name="nom" placeholder="Nom complet" required />
+      <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required />
+      <input type="password" [(ngModel)]="motDePasse" name="motDePasse" placeholder="Mot de passe" required />
+      <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="Confirmer le mot de passe" required />
+      <button type="submit">S'inscrire</button>
+    </form>
 
-  <p *ngIf="error" class="error">{{ error }}</p>
-  <p *ngIf="success" class="success">{{ success }}</p>
+    <p *ngIf="error" class="error">{{ error }}</p>
+    <p *ngIf="success" class="success">{{ success }}</p>
+    <p>Vous avez déjà un compte ? <a routerLink="/login">Se connecter</a></p>
+  </div>
 
-  <p>Vous avez déjà un compte ? 
-  <a routerLink="/login">Se connecter</a>
-</p>
+  <!-- Illustration -->
+  <div class="auth-image">
+    <img src="https://img.freepik.com/free-vector/professional-coworking-space-logo_23-2149455584.jpg?t=st=1755528944~exp=1755532544~hmac=38e43eb2c6a26869cdb396f58d487e0b3b77e49bc9c4a428af2af4dc309f0d72&w=1060" alt="workspace logo">
+  </div>
 </div>
