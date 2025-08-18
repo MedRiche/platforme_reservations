@@ -72,4 +72,9 @@ export class DashboardComponent implements OnInit {
   redirigerVersReservations(): void {
     this.router.navigate(['/admin/reservations']);
   }
+  redirigerVersUtilisateurs(): void {
+    this.router.navigate(['/admin/users']);
+  }
+
+  
 }

@@ -1,24 +1,43 @@
 import { Component, OnInit } from '@angular/core';
+import { CalendarOptions } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { AdminReservationService } from '../../services/admin-reservation.service';
 
 @Component({
-  selector: 'app-admin-users',
+  selector: 'app-users',
   standalone: false,
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  users = [
-    { id: 1, email: 'user1@example.com', role: 'utilisateur' },
-    { id: 2, email: 'admin@example.com', role: 'admin' }
-  ];
 
-  constructor() {}
+  calendarOptions: CalendarOptions = {
+    plugins: [dayGridPlugin, interactionPlugin],
+    initialView: 'dayGridMonth',
+    locale: 'fr',
+    events: [] // sera rempli dynamiquement
+  };
+
+  constructor(private adminService: AdminReservationService) {}
 
   ngOnInit(): void {
-    // Tu pourras plus tard remplacer ça par un appel API
+    this.loadReservations();
   }
 
-  deleteUser(id: number) {
-    this.users = this.users.filter(user => user.id !== id);
+  loadReservations() {
+    this.adminService.getAllReservations().subscribe({
+      next: (reservations: any[]) => {
+        this.calendarOptions.events = reservations.map(res => ({
+          title: `Espace: ${res.espaceId?.nom || res.espace?.nom} - ${res.userId?.name || res.utilisateur?.nom }`,
+          start: res.dateDebut,
+          end: res.dateFin,
+          color: '#4CAF50' // couleur verte pour différencier
+        }));
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement des réservations', err);
+      }
+    });
   }
 }

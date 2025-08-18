@@ -46,7 +46,7 @@ const routes: Routes = [
 { path : 'admin/espace-form', component: EspaceFormComponent },
 { path: 'admin/esp', component: ListAdminComponent},
 {path: 'admin/list-espaces', component: ListAdminComponent , canActivate: [AuthGuard]},
-{path: 'admin/users', component: UsersComponent, canActivate: [AuthGuard]},
+{path: 'admin/users', component: UsersComponent , canActivate: [AuthGuard]},
 {path: 'admin/reservations', component: ReservationAdminListComponent, canActivate: [AuthGuard]},
 
 { path: 'profil', component: ProfilComponent },

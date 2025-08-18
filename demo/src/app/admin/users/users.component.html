@@ -1,20 +1,4 @@
-<h2>Gestion des utilisateurs</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th>Email</th>
-      <th>Rôle</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let user of users">
-      <td>{{ user.email }}</td>
-      <td>{{ user.role }}</td>
-      <td>
-        <button (click)="deleteUser(user.id)">Supprimer</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="global-calendar">
+  <h2 class="mb-3">📅 Calendrier Global des Réservations</h2>
+  <full-calendar [options]="calendarOptions"></full-calendar>
+</div>
