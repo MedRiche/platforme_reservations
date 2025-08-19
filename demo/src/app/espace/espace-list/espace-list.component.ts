@@ -139,7 +139,26 @@ handleDateSelect(selectInfo: DateSelectArg) {
 
   const now = new Date();
 
- 
+  // 🟢 Vérifier si la date choisie est avant aujourd'hui
+  const todayMidnight = new Date();
+  todayMidnight.setHours(0, 0, 0, 0);
+  if (start < todayMidnight) {
+    alert("⚠️ Impossible de réserver une date passée.");
+    this.message = "❌ Vous ne pouvez pas réserver dans le passé.";
+    return;
+  }
+
+  // 🟢 Vérifier si aujourd'hui et l'heure choisie est déjà passée
+  const isSameDay =
+    start.getFullYear() === now.getFullYear() &&
+    start.getMonth() === now.getMonth() &&
+    start.getDate() === now.getDate();
+
+  if (isSameDay && start < now) {
+    alert("⚠️ Impossible de réserver une heure déjà écoulée aujourd'hui.");
+    this.message = "❌ Vous ne pouvez pas réserver dans le passé.";
+    return;
+  }
 
   // Pré-remplissage simple : date et heures
   const yyyy = start.getFullYear();
@@ -167,7 +186,25 @@ handleDateSelect(selectInfo: DateSelectArg) {
   const dateFin = new Date(`${this.reservation.date}T${this.reservation.heureFin}`);
   const now = new Date();
 
-  
+  // Vérifier si la date est passée
+  if (dateDebut < now) {
+    this.message = "❌ Vous ne pouvez pas réserver dans le passé.";
+    
+    return;
+  }
+
+  // Vérifier si aujourd'hui et heure déjà dépassée
+  const today = new Date().toISOString().split("T")[0]; // yyyy-mm-dd d'aujourd'hui
+  if (this.reservation.date === today && dateDebut.getTime() < now.getTime()) {
+    this.message = "❌ L'heure choisie est déjà passée.";
+    return;
+  }
+
+  // Vérifier si heure fin > heure début
+  if (dateFin <= dateDebut) {
+    this.message = "❌ L'heure de fin doit être après l'heure de début.";
+    return;
+  }
 
 
 

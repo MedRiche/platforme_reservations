@@ -193,6 +193,8 @@
 
 
 
+
+
 /* Ligne de séparation */
 hr {
   border: none;
@@ -283,4 +285,8 @@ hr {
   .modal-dialog {
     max-width: 90vw;
   }
+
+  
 }
+
+
