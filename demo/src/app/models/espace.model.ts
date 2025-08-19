@@ -12,5 +12,5 @@ export interface Espace {
   prixParHeure: number;
   description: string;
   entreprise?: string; // Ajouté pour l'entreprise
-  imageUrl?: string; // Champ pour l'URL de l'image
+  image?: string; // Champ pour l'URL de l'image
 }

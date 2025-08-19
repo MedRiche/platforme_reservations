@@ -50,6 +50,7 @@
             <p><strong>Description :</strong> {{ espace.description }}</p>
             <p><strong>Entreprise :</strong> {{ espace.entreprise }}</p>
             <button class="btn btn-outline-primary mt-2" (click)="openDetails(espace)">Détails</button>
+          
           </div>
         </div>
       </div>
@@ -61,6 +62,8 @@
         Aucun espace trouvé avec les filtres sélectionnés.
       </div>
     </ng-template>
+
+
 
     <!-- Modal détails + calendrier -->
     <div class="modal-backdrop" *ngIf="selectedEspace"

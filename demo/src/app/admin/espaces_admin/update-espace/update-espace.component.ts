@@ -14,6 +14,10 @@ export class UpdateEspaceComponent implements OnInit {
   espaceForm!: FormGroup;
   espaceId!: string;
 
+  selectedFile!: File;
+  imagePreview: string | ArrayBuffer | null = null;
+  currentImage: string | null = null; // garder l’image actuelle
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -22,10 +26,8 @@ export class UpdateEspaceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Récupération de l'ID depuis l'URL
     this.espaceId = this.route.snapshot.paramMap.get('id') || '';
 
-    // Initialisation du formulaire
     this.espaceForm = this.fb.group({
       nom: ['', Validators.required],
       description: ['', Validators.required],
@@ -34,12 +36,10 @@ export class UpdateEspaceComponent implements OnInit {
       prixParHeure: [0, Validators.required],
       localisation: ['', Validators.required],
       type: ['', Validators.required],
-      entreprise: ['', Validators.required], // Ajout du champ entreprise
+      entreprise: ['', Validators.required]
       
-
     });
 
-    // Récupération des données de l'espace par ID
     this.espaceService.getEspaceById(this.espaceId).subscribe(
       (data: Espace) => {
         this.espaceForm.patchValue({
@@ -50,8 +50,13 @@ export class UpdateEspaceComponent implements OnInit {
           prixParHeure: data.prixParHeure,
           localisation: data.localisation,
           type: data.type,
-          entreprise: data.entreprise // Ajout du champ entreprise
+          entreprise: data.entreprise
+
         });
+
+        if (data.image) {
+          this.currentImage = `http://localhost:3000/public/uploads/${data.image}`; // ⚡ adapte selon ton backend
+        }
       },
       (error) => {
         console.error('Erreur lors du chargement de l’espace :', error);
@@ -59,20 +64,33 @@ export class UpdateEspaceComponent implements OnInit {
     );
   }
 
-onSubmit(): void {
-  if (this.espaceForm.valid) {
-    this.espaceService.updateEspace(this.espaceId, this.espaceForm.value).subscribe(
-      () => {
-        alert('✅ Espace mis à jour avec succès');
-        this.router.navigate(['/admin/list-espaces']); // ✅ redirection correcte ici
-      },
-      (error) => {
-        console.error('❌ Erreur lors de la mise à jour :', error);
-      }
-    );
+  // ✅ gérer le changement de fichier
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
   }
-}
+
+  onSubmit(): void {
+    if (this.espaceForm.valid) {
+      this.espaceService.updateEspace(this.espaceId, this.espaceForm.value, this.selectedFile).subscribe(
+        () => {
+          alert('✅ Espace mis à jour avec succès');
+          this.router.navigate(['/admin/list-espaces']);
+        },
+        (error) => {
+          console.error('❌ Erreur lors de la mise à jour :', error);
+        }
+      );
+    }
+  }
+
   onCancel(): void {
-    this.router.navigate(['/admin/list-espaces']); // ✅ redirection correcte ici
+    this.router.navigate(['/admin/list-espaces']);
   }
 }

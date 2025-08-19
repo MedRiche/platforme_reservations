@@ -4,15 +4,17 @@ const Espace = require('../models/Espace');
 
 exports.createEspace = async (req, res) => {
   try {
-    
+    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+
     const espace = new Espace({
       ...req.body,
-      
+      image: imagePath
     });
 
     await espace.save();
     res.status(201).json(espace);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 };
@@ -38,10 +40,18 @@ exports.getEspaceById = async (req, res) => {
 
 exports.updateEspace = async (req, res) => {
   try {
-    const updated = await Espace.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updateData = { ...req.body };
+
+    if (req.file) {
+      updateData.image = `/uploads/${req.file.filename}`;
+    }
+
+    const updated = await Espace.findByIdAndUpdate(req.params.id, updateData, { new: true });
     if (!updated) return res.status(404).json({ message: 'Espace non trouvé' });
+
     res.json(updated);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 };

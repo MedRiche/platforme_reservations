@@ -16,6 +16,9 @@ const path = require('path');
 app.use(cors({ origin: 'http://localhost:4200' }));
 app.use(express.json()); // ← très important pour req.body
 
+// ⬇️ rendre les fichiers accessibles publiquement
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+
 app.use('/api/auth', authRoutes);
 app.use('/api/espaces', espaceRoutes);
 app.use('/api/admin/reservations', adminReservationsRoutes); // Routes pour les réservations admin

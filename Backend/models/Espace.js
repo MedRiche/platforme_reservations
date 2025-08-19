@@ -35,6 +35,12 @@ const espaceSchema = new mongoose.Schema({
     required: true // si chaque espace doit appartenir à une entreprise
   },
 
+    // ⬇️ champ image
+  image: {
+    type: String, // on stocke le chemin ou URL
+    required: false
+  }
+
   
 });
 

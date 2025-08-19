@@ -48,30 +48,36 @@ this.espaceForm = this.fb.group({
     }
   }
 
-  onSubmit(): void {
-    if (this.espaceForm.valid) {
-
-      
-      const action = this.isEdit
-        ? this.espaceService.updateEspace(this.espaceId!, this.espaceForm.value)
-        : this.espaceService.ajouterEspace(this.espaceForm.value);
-
-      action.subscribe({
-        next: () => {
-          this.snackBar.open(
-            this.isEdit ? '✅ Espace modifié avec succès !' : '✅ Espace ajouté avec succès !',
-            'Fermer',
-            { duration: 3000 }
-          );
-          this.router.navigate(['admin/esp']);
-        },
-        error: err => {
-          console.error('Erreur:', err);
-          alert(this.isEdit ? '❌ Échec de la modification' : '❌ Échec de l\'ajout');
-        }
-      });
-    }
+  onFileSelected(event: any): void {
+  if (event.target.files && event.target.files.length > 0) {
+    this.selectedFile = event.target.files[0];
   }
+}
+
+onSubmit(): void {
+  if (this.espaceForm.valid) {
+    const espaceData = this.espaceForm.value;
+
+    const action = this.isEdit
+      ? this.espaceService.updateEspace(this.espaceId!, espaceData, this.selectedFile!)
+      : this.espaceService.ajouterEspace(espaceData, this.selectedFile!);
+
+    action.subscribe({
+      next: () => {
+        this.snackBar.open(
+          this.isEdit ? '✅ Espace modifié avec succès !' : '✅ Espace ajouté avec succès !',
+          'Fermer',
+          { duration: 3000 }
+        );
+        this.router.navigate(['admin/esp']);
+      },
+      error: err => {
+        console.error('Erreur:', err);
+        alert(this.isEdit ? '❌ Échec de la modification' : '❌ Échec de l\'ajout');
+      }
+    });
+  }
+}
 
 
 

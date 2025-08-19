@@ -12,6 +12,7 @@ export interface Espace {
   description: string;
   prixParHeure: number;
   entreprise?: string; // Ajouté pour l'entreprise
+  image?: string; // Champ pour l'image
 }
 
 @Injectable({
@@ -44,20 +45,47 @@ getEspaceById(id: string): Observable<Espace> {
     return this.http.post<Espace>(this.apiUrl, espace, { headers });
   }
 
-updateEspace(id: string, data: any) {
-  return this.http.put(`${this.apiUrl}/${id}`, data);
-}
+
 
 deleteEspace(id: string) {
   return this.http.delete(`${this.apiUrl}/${id}`);
 }
-  ajouterEspace(data: Espace): Observable<Espace> {
-  return this.http.post<Espace>(this.apiUrl, data);
-}
+ 
 
  getAllEspaces(): Observable<Espace[]> {
   return this.http.get<Espace[]>(`${this.apiUrl}`);
 }
+
+ajouterEspace(data: any, file?: File): Observable<Espace> {
+  const formData = new FormData();
+
+  // append tous les champs
+  Object.keys(data).forEach(key => {
+    formData.append(key, (data as any)[key]);
+  });
+
+  // append image si existe
+  if (file) {
+    formData.append('image', file, file.name);
+  }
+
+  return this.http.post<Espace>(this.apiUrl, formData);
+}
+
+updateEspace(id: string, data: any, file?: File): Observable<Espace> {
+  const formData = new FormData();
+
+  Object.keys(data).forEach(key => {
+    formData.append(key, (data as any)[key]);
+  });
+
+  if (file) {
+    formData.append('image', file, file.name);
+  }
+
+  return this.http.put<Espace>(`${this.apiUrl}/${id}`, formData);
+}
+
 
 
 

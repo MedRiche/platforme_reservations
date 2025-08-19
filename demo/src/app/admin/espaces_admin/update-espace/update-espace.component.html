@@ -50,13 +50,28 @@
       <input type="text" id="entreprise" formControlName="entreprise" class="form-control" />
     </div>
 
-    
 
-    
-    
+      <!-- ✅ gestion image -->
+    <div class="mb-3">
+      <label for="image" class="form-label">Image</label>
+      <input type="file" id="image" (change)="onFileSelected($event)" class="form-control" accept="image/*" />
+    </div>
+
+    <!-- afficher l’image actuelle -->
+    <div *ngIf="currentImage" class="mb-3">
+      <p>Image actuelle :</p>
+      <img [src]="currentImage" alt="Image actuelle" width="150" class="rounded shadow" />
+    </div>
+
+    <!-- preview si nouvelle image choisie -->
+    <div *ngIf="imagePreview" class="mb-3">
+      <p>Nouvelle image :</p>
+      <img [src]="imagePreview" alt="Preview" width="150" class="rounded shadow" />
+    </div>
 
     <button type="submit" class="btn btn-primary" [disabled]="espaceForm.invalid">
       Enregistrer les modifications
     </button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="onCancel()">Annuler</button>
   </form>
 </div>
