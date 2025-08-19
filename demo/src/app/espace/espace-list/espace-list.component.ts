@@ -7,6 +7,7 @@ import { CalendarOptions, DateSelectArg, EventApi } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-espace-list',
@@ -26,6 +27,13 @@ export class EspaceListComponent implements OnInit {
 
   reservation = { date: '', heureDebut: '', heureFin: '' };
   message = '';
+
+
+
+  // Ajoute ces variables dans ta classe
+imageModalVisible = false;
+imageToShow: string | null = null;
+
 
   // FullCalendar options
   calendarOptions: CalendarOptions = {
@@ -94,39 +102,60 @@ export class EspaceListComponent implements OnInit {
     });
   }
 
+
+
   closeDetails() {
     this.selectedEspace = null;
     this.reservation = { date: '', heureDebut: '', heureFin: '' };
     this.calendarOptions = { ...this.calendarOptions, events: [] };
   }
 
-  // select handler from FullCalendar (user selects a range)
-  handleDateSelect(selectInfo: DateSelectArg) {
-    // on ne permet la sélection que si un espace est ouvert
-    if (!this.selectedEspace) {
-      alert('Ouvrez d\'abord les détails d\'un espace.');
-      return;
-    }
 
-    const start = selectInfo.start;
-    const end = selectInfo.end;
-
-    // Pré-remplissage simple : date et heures
-    const yyyy = start.getFullYear();
-    const mm = String(start.getMonth() + 1).padStart(2, '0');
-    const dd = String(start.getDate()).padStart(2, '0');
-    this.reservation.date = `${yyyy}-${mm}-${dd}`;
-
-    const pad = (d: number) => String(d).padStart(2, '0');
-    this.reservation.heureDebut = `${pad(start.getHours())}:${pad(start.getMinutes())}`;
-    this.reservation.heureFin = `${pad(end.getHours())}:${pad(end.getMinutes())}`;
-
-    // demander confirmation
-    if (confirm(`Réserver le créneau ${this.reservation.date} ${this.reservation.heureDebut} → ${this.reservation.heureFin} ?`)) {
-      this.createReservationFromSelection();
-
-    }
+// Ouvre le modal avec l’image
+openImageModal(espace: Espace) {
+  if (espace.image) {
+    this.imageToShow = `http://localhost:3000${espace.image}`;
+    this.imageModalVisible = true;
+  } else {
+    alert("⚠️ Cet espace n'a pas d'image.");
   }
+}
+
+// Fermer le modal
+closeImageModal() {
+  this.imageModalVisible = false;
+  this.imageToShow = null;
+}
+
+// select handler from FullCalendar (user selects a range)
+handleDateSelect(selectInfo: DateSelectArg) {
+  if (!this.selectedEspace) {
+    alert('Ouvrez d\'abord les détails d\'un espace.');
+    return;
+  }
+
+  const start = selectInfo.start;
+  const end = selectInfo.end;
+
+  const now = new Date();
+
+ 
+
+  // Pré-remplissage simple : date et heures
+  const yyyy = start.getFullYear();
+  const mm = String(start.getMonth() + 1).padStart(2, '0');
+  const dd = String(start.getDate()).padStart(2, '0');
+  this.reservation.date = `${yyyy}-${mm}-${dd}`;
+
+  const pad = (d: number) => String(d).padStart(2, '0');
+  this.reservation.heureDebut = `${pad(start.getHours())}:${pad(start.getMinutes())}`;
+  this.reservation.heureFin = `${pad(end.getHours())}:${pad(end.getMinutes())}`;
+
+  if (confirm(`Réserver le créneau ${this.reservation.date} ${this.reservation.heureDebut} → ${this.reservation.heureFin} ?`)) {
+    this.createReservationFromSelection();
+  }
+}
+
 
   createReservationFromSelection(): void {
   if (!this.reservation.date || !this.reservation.heureDebut || !this.reservation.heureFin || !this.selectedEspace) {
@@ -136,6 +165,13 @@ export class EspaceListComponent implements OnInit {
 
   const dateDebut = new Date(`${this.reservation.date}T${this.reservation.heureDebut}`);
   const dateFin = new Date(`${this.reservation.date}T${this.reservation.heureFin}`);
+  const now = new Date();
+
+  
+
+
+
+  
 
   const payload = {
     espace: this.selectedEspace._id!,
@@ -152,6 +188,7 @@ export class EspaceListComponent implements OnInit {
     }
   });
 }
+
 
 
   // bouton du sidebar

@@ -50,7 +50,7 @@
             <p><strong>Description :</strong> {{ espace.description }}</p>
             <p><strong>Entreprise :</strong> {{ espace.entreprise }}</p>
             <button class="btn btn-outline-primary mt-2" (click)="openDetails(espace)">Détails</button>
-          
+            <button class="btn btn-outline-secondary mt-2"  (click)="openImageModal(espace)">Voir Image</button>
           </div>
         </div>
       </div>
@@ -63,6 +63,21 @@
       </div>
     </ng-template>
 
+    <!-- Modal Image -->
+<div class="modal-backdrop" *ngIf="imageModalVisible"
+     style="position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:1100; display:flex; align-items:center; justify-content:center;">
+  <div class="modal-dialog" style="max-width:600px; margin:auto;">
+    <div class="modal-content bg-white">
+      <div class="modal-header">
+        <h5 class="modal-title">Image de l'espace</h5>
+        <button class="btn-close" (click)="closeImageModal()"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img [src]="imageToShow" alt="Image espace" class="img-fluid rounded" />
+      </div>
+    </div>
+  </div>
+</div>
 
 
     <!-- Modal détails + calendrier -->
@@ -130,3 +145,4 @@
 
   </div>
 </div>
+
